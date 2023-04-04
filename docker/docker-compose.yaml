@@ -1,0 +1,72 @@
+version: '3'
+services:
+  web:
+    image: webdevops/php-apache-dev:7.4-alpine
+    container_name: web
+    restart: always
+    environment:
+      - WEB_ALIAS_DOMAIN=magento.lc
+      - WEB_DOCUMENT_ROOT=/app/pub
+      - PHP_DATE_TIMEZONE=EST
+      - PHP_DISPLAY_ERRORS=1
+      - PHP_MEMORY_LIMIT=2048M
+      - PHP_MAX_EXECUTION_TIME=300
+      - PHP_POST_MAX_SIZE=500M
+      - PHP_UPLOAD_MAX_FILESIZE=1024M
+    volumes:
+      - ../:/app:cached
+    ports:
+      - "8000:80"
+      - "8443:443"
+      - "32823:22"
+    links:
+      - mysql
+      - elasticsearch
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    restart: always
+    ports:
+      - "33061:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=magento
+    volumes:
+      - ../docker/data:/var/lib/mysql
+  phpmyadmin:
+    container_name: phpmyadmin
+    restart: always
+    image: phpmyadmin/phpmyadmin:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - PMA_USER=root
+      - PMA_PASSWORD=root
+    ports:
+      - "8080:80"
+    links:
+      - mysql:db
+    depends_on:
+      - mysql
+  elasticsearch:
+    container_name: elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.8.1
+    restart: always
+    environment:
+      - node.name=elasticsearch
+      - cluster.name=es-docker-cluster
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1024M
+    volumes:
+      - ../docker/elastichsearch/data:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+
+volumes:
+  db-data:
+      external: false
