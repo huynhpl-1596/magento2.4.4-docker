@@ -8,4 +8,7 @@
     <type name="Magento\Catalog\Model\Product">
         <plugin name="Huynhpl_HelloWorld__changeProductName" type="Huynhpl\HelloWorld\Plugin\Catalog\Model\ProductPlugin" sortOrder="1" />
     </type>
+    <preference for="Magento\Catalog\Block\Product\View" type="Huynhpl\HelloWorld\Block\Catalog\Product\View" />
+    <preference for="Magento\Catalog\Controller\Product\View" type="Huynhpl\HelloWorld\Controller\Catalog\Product\View" />
+    <preference for="Magento\Catalog\Helper\Data" type="Huynhpl\HelloWorld\Helper\Catalog\Data" />
 </config>
