@@ -5,4 +5,7 @@
     <type name="Huynhpl\HelloWorld\Controller\Index\Example">
         <plugin name="Huynhpl_HelloWorld_Plugin" type="Huynhpl\HelloWorld\Plugin\ExamplePlugin" sortOrder="10" disabled="false"  />
     </type>
+    <type name="Magento\Catalog\Model\Product">
+        <plugin name="Huynhpl_HelloWorld__changeProductName" type="Huynhpl\HelloWorld\Plugin\Catalog\Model\ProductPlugin" sortOrder="1" />
+    </type>
 </config>
