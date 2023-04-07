@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Catalog\Model\Product" type="Huynhpl\HelloWorld\Model\Product"/>
     <type name="Huynhpl\HelloWorld\Controller\Index\Example">
         <plugin name="Huynhpl_HelloWorld_Plugin" type="Huynhpl\HelloWorld\Plugin\ExamplePlugin" sortOrder="10" disabled="false"  />
     </type>
